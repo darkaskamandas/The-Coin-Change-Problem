@@ -1,0 +1,21 @@
+<?php
+$_fp = fopen("php://stdin", "r");
+/* Enter your code here. Read input from STDIN. Print output to STDOUT */
+$line = stream_get_line($_fp, 1000000 ,"\n");
+$coins = explode(", ", $line);
+for($i = 0; $i < count($coins); $i++)
+    {
+    $coins[$i] = intval($coins[$i]);
+}
+fscanf($_fp, "%d", $N);
+$ways = array_fill(0, $N+1, 0);
+$ways[0] = 1;
+for($i = 0; $i < count($coins); $i++)
+   {
+    for($j = $coins[$i]; $j <= $N; $j++)
+        {
+                $ways[$j] = $ways[$j] + $ways[$j - $coins[$i]];
+    }
+}
+echo $ways[$N];
+?>
